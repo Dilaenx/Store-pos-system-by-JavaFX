@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="519.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="540.0" layoutX="175.0" layoutY="-4.0" stroke="BLACK" strokeType="INSIDE" width="625.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.7647058963775635" green="0.9490196108818054" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.006729475100942127">
+                     <color>
+                        <Color red="0.7647058963775635" green="0.9490196108818054" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.3960784375667572" green="0.7764706015586853" blue="0.9764705896377563" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="540.0" layoutX="-5.0" layoutY="-4.0" stroke="BLACK" strokeType="INSIDE" width="205.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color green="0.0042105261236429214" blue="0.2526315748691559" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.006729475100942127">
+                     <color>
+                        <Color green="0.003921568859368563" blue="0.250980406999588" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.15294118225574493" green="0.34117648005485535" blue="0.4745098054409027" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <JFXButton layoutX="19.0" layoutY="83.0" text="CUSTOMER MANAGEMENT" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXButton>
+      <JFXButton layoutX="19.0" layoutY="121.0" text="ITEM MANAGEMENT" textFill="WHITE" />
+      <JFXButton layoutX="19.0" layoutY="161.0" text="ORDER DETAILS" textFill="WHITE" />
+      <JFXButton layoutX="19.0" layoutY="200.0" text="ADD ORDER" textFill="WHITE" />
+      <JFXButton layoutX="56.0" layoutY="490.0" text="ABOUT" textFill="WHITE" />
+      <JFXTextField fx:id="txtName" layoutX="544.0" layoutY="85.0" promptText="Name" />
+      <JFXTextField fx:id="txtPhoneNumber" layoutX="311.0" layoutY="123.0" promptText="Phone Number" />
+      <JFXTextField fx:id="txtAddress" layoutX="544.0" layoutY="123.0" promptText="Address" />
+      <TableView fx:id="tblCustomerList" layoutX="220.0" layoutY="214.0" prefHeight="302.0" prefWidth="554.0">
+        <columns>
+            <TableColumn fx:id="colId" prefWidth="126.4000244140625" text="Id" />
+          <TableColumn fx:id="colName" prefWidth="127.20001220703125" text="Name" />
+          <TableColumn fx:id="colPhoneNumber" prefWidth="145.5999755859375" text="Phone Number" />
+            <TableColumn fx:id="colAddress" prefWidth="150.39996337890625" text="Address" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnAdd" layoutX="311.0" layoutY="171.0" onAction="#btnAddOnAction" prefHeight="28.0" prefWidth="65.0" text="ADD" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="btnUpdate" layoutX="385.0" layoutY="173.0" onAction="#btnUpdateOnAction" text="UPDATE" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="btnDelete" layoutX="528.0" layoutY="173.0" onAction="#btnDeleteOnAction" text="DELETE" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="btnClear" layoutX="460.0" layoutY="173.0" onAction="#btnClearOnAction" prefHeight="28.0" prefWidth="57.0" text="CLEAR" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXButton>
+      <Label fx:id="lblCM" layoutX="320.0" layoutY="14.0" text="CUSTOMER MANAGEMENT FORM">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txtId" layoutX="311.0" layoutY="85.0" promptText="Id" />
+      <JFXButton fx:id="btnSearch" layoutX="599.0" layoutY="173.0" onAction="#btnSearchOnAction" text="SEARCH" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXButton>
+   </children>
+
+      <stylesheets>
+         <URL value="@../Style/style.css" />
+      </stylesheets>
+
+</AnchorPane>
