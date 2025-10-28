@@ -109,7 +109,19 @@ public class CustomerFormController {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-
+        try {
+            customerService.updateCustomerById(
+                    new Customer(
+                            txtId.getText(),
+                            txtName.getText(),
+                            Integer.parseInt(txtPhoneNumber.getText()),
+                            txtAddress.getText()
+                    )
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        loadTable();
     }
     @FXML
     void btnSearchOnAction(ActionEvent actionEvent) {

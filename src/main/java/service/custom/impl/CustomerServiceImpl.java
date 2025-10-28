@@ -36,4 +36,9 @@ public class CustomerServiceImpl implements CustomerService {
         return repository.deleteByCustomerId(text);
     }
 
+    @Override
+    public boolean updateCustomerById(Customer customer) throws SQLException {
+        return repository.updateCustomerById(customer);
+    }
+
 }

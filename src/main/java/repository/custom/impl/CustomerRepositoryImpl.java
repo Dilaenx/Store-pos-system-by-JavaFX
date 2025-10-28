@@ -67,4 +67,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public boolean deleteByCustomerId(String id) throws SQLException {
         return CrudUtil.execute("DELETE FROM customer WHERE id = ?",id);
     }
+
+    @Override
+    public boolean updateCustomerById(Customer customer) throws SQLException {
+        return CrudUtil.execute(
+                "UPDATE customer SET name = ?, phoneNumber = ?, address = ? WHERE id = ?",
+                customer.getName(),
+                customer.getPhoneNumber(),
+                customer.getAddress(),
+                customer.getId());
+    }
 }

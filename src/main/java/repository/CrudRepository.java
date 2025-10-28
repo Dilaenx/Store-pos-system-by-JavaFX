@@ -1,5 +1,7 @@
 package repository;
 
+import model.Customer;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,4 +13,6 @@ public interface CrudRepository <T,Id> extends SuperRepository{
     List<T> getAll() throws SQLException;
     Integer getCount();
     boolean deleteByCustomerId(Id id) throws SQLException;
+
+    boolean updateCustomerById(T t) throws SQLException;
 }
