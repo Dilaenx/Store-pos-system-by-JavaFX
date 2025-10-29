@@ -13,7 +13,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     CustomerRepository repository= RepositoryFactory.getInstance().getRepository(RepositoryType.CUSTOMER);
     @Override
-    public boolean addCustomer(Customer customer) throws SQLException {
+    public boolean add(Customer customer) throws SQLException {
         return repository.save(customer);
 
     }
@@ -27,18 +27,23 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer searchCustomerById(String id) throws SQLException {
+    public Customer searchById(String id) throws SQLException {
         return repository.searchById(id);
     }
 
     @Override
-    public boolean deleteByCustomerId(String text) throws SQLException {
-        return repository.deleteByCustomerId(text);
+    public boolean deleteById(String text) throws SQLException {
+        return repository.deleteById(text);
     }
 
     @Override
-    public boolean updateCustomerById(Customer customer) throws SQLException {
-        return repository.updateCustomerById(customer);
+    public boolean updateById(Customer customer) throws SQLException {
+        return repository.updateById(customer);
+    }
+
+    @Override
+    public List<String> getAllIds() throws SQLException {
+        return repository.getAllIds();
     }
 
 }

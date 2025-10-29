@@ -12,7 +12,6 @@ import java.util.List;
 
 public class CrudUtil {
 
-    CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
     public static <T> T execute(String sql,Object... args) throws SQLException {
         PreparedStatement psTM = DBConnection.getInstance().getConnection().prepareStatement(sql);
 

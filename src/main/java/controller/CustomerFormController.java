@@ -5,22 +5,30 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Customer;
 import service.ServiceFactory;
 import service.custom.CustomerService;
 import util.ServiceType;
 
+import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static util.ServiceType.CUSTOMER;
 
-public class CustomerFormController {
+public class CustomerFormController implements Initializable {
 
     @FXML
     private JFXButton btnAdd;
@@ -68,20 +76,33 @@ public class CustomerFormController {
     private JFXTextField txtPhoneNumber;
 
 
-    CustomerService customerService= ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+    CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadTable();
+        tblCustomerList.getSelectionModel().selectedItemProperty().addListener((observableValue, customer, t1) -> {
+            txtName.setText(t1.getName());
+            txtId.setText(t1.getId());
+            txtPhoneNumber.setText(t1.getPhoneNumber() + "");
+            txtAddress.setText(t1.getAddress());
+
+
+        });
+    }
 
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
         Customer customer = new Customer(
-            txtId.getText(),
-            txtName.getText(),
-            Integer.parseInt(txtPhoneNumber.getText()),
-            txtAddress.getText()
+                txtId.getText(),
+                txtName.getText(),
+                Integer.parseInt(txtPhoneNumber.getText()),
+                txtAddress.getText()
         );
 
 
-        if(customerService.addCustomer(customer)){
-            new Alert(Alert.AlertType.CONFIRMATION,"Customer Added!").show();
+        if (customerService.add(customer)) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Customer Added!").show();
         }
 
         loadTable();
@@ -97,8 +118,8 @@ public class CustomerFormController {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         try {
-            if(customerService.deleteByCustomerId(txtId.getText())){
-                new Alert(Alert.AlertType.CONFIRMATION,"Customer Deleted!").show();
+            if (customerService.deleteById(txtId.getText())) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Customer Deleted!").show();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -110,7 +131,7 @@ public class CustomerFormController {
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
         try {
-            customerService.updateCustomerById(
+            customerService.updateById(
                     new Customer(
                             txtId.getText(),
                             txtName.getText(),
@@ -123,11 +144,12 @@ public class CustomerFormController {
         }
         loadTable();
     }
+
     @FXML
     void btnSearchOnAction(ActionEvent actionEvent) {
         Customer customer = null;
         try {
-            customer = customerService.searchCustomerById(txtId.getText());
+            customer = customerService.searchById(txtId.getText());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -138,8 +160,8 @@ public class CustomerFormController {
 
     }
 
-    private void loadTable(){
-        List<Customer>getAll;
+    private void loadTable() {
+        List<Customer> getAll;
         try {
             getAll = customerService.getAll();
         } catch (SQLException e) {
@@ -156,11 +178,42 @@ public class CustomerFormController {
 
 
     }
-    private void Clear(){
+
+    private void Clear() {
         txtId.setText("");
         txtName.setText("");
         txtAddress.setText("");
         txtPhoneNumber.setText("");
     }
 
+
+    public void btnItemManagementOnAction(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewFxml/ItemForm.fxml"));
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.show();
+        Stage currentStage = (Stage) ((JFXButton) actionEvent.getSource()).getScene().getWindow();
+        currentStage.close();
+
+    }
+
+    public void btnAddOrderOnAction(ActionEvent actionEvent) {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewFxml/AddOrderForm.fxml"));
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.show();
+        Stage currentStage = (Stage) ((JFXButton) actionEvent.getSource()).getScene().getWindow();
+        currentStage.close();
+
+
+    }
 }
