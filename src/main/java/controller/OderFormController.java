@@ -85,6 +85,9 @@ public class OderFormController implements Initializable {
     private Label lblUnityPrice;
 
     @FXML
+    private Label lblNetTotal;
+
+    @FXML
     private TableView<CartTM> tblOder;
 
     @FXML
@@ -93,13 +96,14 @@ public class OderFormController implements Initializable {
     CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
     ItemService itemService = ServiceFactory.getInstance().getServiceType(ServiceType.ITEM);
     List<CartTM> cartTMSList = new ArrayList<>();
+    Double netTotal= 0.0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         loadCustomerIds();
         loadItemIds();
@@ -134,32 +138,41 @@ public class OderFormController implements Initializable {
 
         lblItemName.setText(item.getName());
         lblStock.setText(item.getQty()+"");
-        lblUnityPrice.setText("Rs"+item.getUnitPrice());
+        lblUnityPrice.setText(item.getUnitPrice()+"");
     }
     @FXML
     void btnAddOrderOnAction(ActionEvent event) {
-        CartTM cartTM = new CartTM(
-                cmbItemId.getId(),
-                lblItemName.getText(),
-                Integer.parseInt(lblUnityPrice.getText()),
-                Double.parseDouble(lblUnityPrice.getText()),
-                (Double.parseDouble(lblUnityPrice.getText())*(Double.parseDouble(lblUnityPrice.getText())))
-        );
-        cartTMSList.add(cartTM);
-        loadTable();
+
     }
     private void loadTable(){
+        netTotal=0.0;
+        for(CartTM item :cartTMSList){
+            netTotal+= item.getTotal();
+        }
         tblOder.setItems(FXCollections.observableArrayList(cartTMSList));
+        System.out.println(netTotal);
+        lblNetTotal.setText(netTotal+"");
     }
 
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
-
+        CartTM cartTM = new CartTM(
+                (String) cmbItemId.getValue(),
+                lblItemName.getText(),
+                Integer.parseInt(lblStock.getText()),
+                Double.parseDouble(lblUnityPrice.getText()),
+                Double.parseDouble(txtQtyOnHand.getText()),
+                (Double.parseDouble(lblUnityPrice.getText())*(Double.parseDouble(txtQtyOnHand.getText())))
+        );
+        System.out.println(cartTM);
+        cartTMSList.add(cartTM);
+        loadTable();
+        clear();
     }
 
     @FXML
     void btnClearOnAction(ActionEvent event) {
-
+        clear();
     }
 
     @FXML
@@ -203,9 +216,18 @@ public class OderFormController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
+    private void clear(){
+        cmbItemId.getSelectionModel().clearSelection();
+        cmbCustomerID.getSelectionModel().clearSelection();
+        lblCustomerName.setText("Customer");
+        lblCustomerPhoneNumber.setText("Phone Number");
+        lblItemName.setText("Item");
+        lblStock.setText("Stock");
+        lblUnityPrice.setText("Unity Price");
+        txtQtyOnHand.clear();
+    }
+
 
 
 }

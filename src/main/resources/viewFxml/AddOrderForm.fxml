@@ -100,7 +100,6 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblCM11" layoutX="295.0" layoutY="504.0" text="0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
